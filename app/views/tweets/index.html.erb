@@ -1,0 +1,43 @@
+<% if notice %>
+<p class="notice"><%= notice %></p>
+<% end %>
+
+<h1>Listing tweets - <%= @user.name %></h1>
+
+
+<%= render 'form' %>
+
+<table>
+  <tr>
+    <th>Content</th>
+    <th>User</th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @tweets.each do |tweet| %>
+  <tr>
+    <td><%= tweet.content %></td>
+    <!-- <td><%= tweet.user.name %></td> -->
+    <td><%= link_to tweet.user.name, tweet.user %></td>
+    <td>
+      <% unless tweet.user.id ==  @user.id %>
+        <% if @user.followings.include? tweet.user %>
+          <%=  button_to 'UnFollow', following_user_path(tweet.user.id), method: :delete %>
+        <% else %>
+          <%=  button_to 'Follow', following_user_path(tweet.user.id) %>
+        <% end %>
+      <% end %>
+    </td>
+    <td><% if tweet.user.id == @user.id %>
+      <%= link_to 'Destroy', tweet, method: :delete, data: { confirm: 'Are you sure?' } %>
+      <%end %>
+    </td>
+
+  </tr>
+<% end %>
+</table>
+<p><%= will_paginate @tweets %></p>
+<%= link_to 'User List', users_path %>
+<%= link_to 'Logout', logout_path, :method=>'delete' %>
+<br />  
