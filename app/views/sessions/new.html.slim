@@ -1,0 +1,11 @@
+h1 This is Login Page
+
+= form_tag do
+
+	.field
+		= label_tag :name, 'Name:'
+		br
+		= text_field :name, params[:name]
+
+	.actions
+		= submit_tag "Login"

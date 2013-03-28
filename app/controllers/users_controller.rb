@@ -1,41 +1,20 @@
 class UsersController < ApplicationController
   # GET /users
   # GET /users.json
-  def index
-    @users = User.all
 
-    respond_to do |format|
-      format.html # index.html.erb
-      format.json { render json: @users }
-    end
-  end
+  before_filter :authorize, only: [:edit, :update]
 
-  # GET /users/1
-  # GET /users/1.json
-  def show
+  def authorize
     @user = User.find(params[:id])
 
-    respond_to do |format|
-      format.html # show.html.erb
-      format.json { render json: @user }
+    unless current_user == @user or current_user.admin?
+      flash[:notice] = "You are not allowed"
+      redirect_to :root
     end
   end
 
-  # GET /users/new
-  # GET /users/new.json
-  def new
-    @user = User.new
-
-    respond_to do |format|
-      format.html # new.html.erb
-      format.json { render json: @user }
-    end
-  end
-
-  # GET /users/1/edit
-  def edit
-    @user = User.find(params[:id])
-  end
+  expose(:users)
+  expose(:user)
 
   # POST /users
   # POST /users.json
@@ -57,7 +36,7 @@ class UsersController < ApplicationController
   # PUT /users/1.json
   def update
     @user = User.find(params[:id])
-
+    
     respond_to do |format|
       if @user.update_attributes(params[:user])
         format.html { redirect_to @user, notice: 'User was successfully updated.' }
@@ -73,7 +52,12 @@ class UsersController < ApplicationController
   # DELETE /users/1.json
   def destroy
     @user = User.find(params[:id])
-    @user.destroy
+
+    if @user == current_user
+      @user.destroy
+    else
+      flash[:notice] = "You are not allowed"
+    end
 
     respond_to do |format|
       format.html { redirect_to users_url }
@@ -84,10 +68,15 @@ class UsersController < ApplicationController
   def follow
     user = User.find(session[:user_id])
     following = User.find(params[:id])
+    
     begin
       user.followings << following
+      user.save!
     rescue ActiveRecord::RecordNotUnique
       flash[:notice] = "You are already following #{following.name}"
+    rescue ActiveRecord::RecordInvalid
+      flash[:notice] = "You cannot follow yourself"
+      user.followings.delete following
     else
       flash[:notice] = "You are now following #{following.name}"
     end

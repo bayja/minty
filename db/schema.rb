@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130322013855) do
+ActiveRecord::Schema.define(:version => 20130328002550) do
 
   create_table "tweets", :force => true do |t|
     t.text     "content"
@@ -25,6 +25,7 @@ ActiveRecord::Schema.define(:version => 20130322013855) do
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
     t.text     "description"
+    t.boolean  "admin"
   end
 
   create_table "users_have_followings", :id => false, :force => true do |t|

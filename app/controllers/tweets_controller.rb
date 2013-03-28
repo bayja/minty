@@ -9,42 +9,18 @@ class TweetsController < ApplicationController
   end
   # GET /tweets
   # GET /tweets.json
+
+  expose(:tweet) { Tweet.new }
+  expose(:tweets) {
+    Tweet.timeline_for(current_user.me_and_followings).paginate(page: params[:page], per_page: 100).order('created_at desc')
+  }
   def index
-    @user = User.find(session[:user_id])
-    @tweet = Tweet.new
-    @tweets = Tweet.paginate page: params[:page], order:'created_at desc', per_page: 10
-
-    respond_to do |format|
-      format.html # index.html.erb
-      format.json { render json: @tweets }
+    unless params[:tweet_id].nil?
+      @quote = Tweet.find(params[:tweet_id])
+      @tweet = Tweet.new
+      @tweet.content = "\"@#{@quote.user.name}: #{@quote.content}\""
+      self.tweet = @tweet
     end
-  end
-
-  # GET /tweets/1
-  # GET /tweets/1.json
-  def show
-    @tweet = Tweet.find(params[:id])
-
-    respond_to do |format|
-      format.html # show.html.erb
-      format.json { render json: @tweet }
-    end
-  end
-
-  # GET /tweets/new
-  # GET /tweets/new.json
-  def new
-    @tweet = Tweet.new
-
-    respond_to do |format|
-      format.html # new.html.erb
-      format.json { render json: @tweet }
-    end
-  end
-
-  # GET /tweets/1/edit
-  def edit
-    @tweet = Tweet.find(params[:id])
   end
 
   # POST /tweets

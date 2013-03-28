@@ -10,4 +10,5 @@ class Tweet < ActiveRecord::Base
   validates :user_id, :presence => { :presence => true, :message => "Can not find user name" }
 
   scope :tweets, includes(:user).order("created_at DESC")
+  scope :timeline_for, lambda { |users| where(user_id: users) }
 end

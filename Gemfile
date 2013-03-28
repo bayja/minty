@@ -24,6 +24,14 @@ gem 'jquery-rails'
 
 gem 'will_paginate', '~> 3.0'
 
+gem 'slim'
+
+gem 'decent_exposure'
+
+group :test do
+	gem 'cucumber-rails' , require: false
+	gem 'database_cleaner'
+end
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
 
