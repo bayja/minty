@@ -2,6 +2,9 @@ class User < ActiveRecord::Base
   attr_accessible :name, :description, :admin
 
   has_many :tweets, order: "created_at desc"
+  
+  has_many :favorites
+  has_many :favorite_tweets, :through => :favorites, :source => :tweet
 
   has_and_belongs_to_many :followings,
                           :class_name => 'User',

@@ -93,4 +93,10 @@ class UsersController < ApplicationController
     flash[:notice] = "You are now unfollowing #{user_to_unfollow.name}"
     redirect_to :root
   end
+
+  def favorites
+    @user = User.find(params[:id])
+
+    @favorites = @user.favorite_tweets.paginate(page: params[:page], per_page: 100).order('created_at desc')
+  end
 end

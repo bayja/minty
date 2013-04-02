@@ -3,10 +3,13 @@ Minty::Application.routes.draw do
   resources :users do
     post 'following' => :follow, on: :member
     delete 'following' => :unfollow, on: :member
+    get 'favorites' => :favorites, on: :member
   end
 
   resources :tweets do
     post 'retweet' => :retweet, on: :member
+    post 'favorite' => :favorite, on: :member
+    delete 'favorite' => :unfavorite, on: :member
   end
 
   controller :sessions do

@@ -5,6 +5,10 @@ class Tweet < ActiveRecord::Base
   attr_accessible :content, :user_id
 
 	has_many :retweets, :class_name => "Tweet", :foreign_key => "retweet_id"
+
+	has_many :favorites
+	has_many :favorite_users, :through => :favorites, :source => :user
+
 	belongs_to :original_tweet, :class_name => "Tweet", :foreign_key => "retweet_id"
 
   validates :content, :length => { :maximum => 140 }

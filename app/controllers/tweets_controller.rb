@@ -97,4 +97,19 @@ class TweetsController < ApplicationController
     flash[:notice] = "Retweeted"
     redirect_to :root
   end
+
+  def favorite
+    tweet = Tweet.find params[:id]
+    current_user.favorite_tweets << tweet
+    flash[:notice] = "Favorited"
+    redirect_to :root
+    
+  end
+
+  def unfavorite
+    tweet = Tweet.find params[:id]
+    tweet.favorite_users.delete current_user
+    flash[:notice] = "unfavorited!"
+    redirect_to :back
+  end
 end

@@ -4,12 +4,10 @@
 
 .page-header
   h1 
-    ' Listing tweets
-    small #{current_user.name}
+    ' Listing Favorite Tweets
+    small #{@user.name}
 
-= render 'form'
-
-- tweets.each do |tweet|
+- @favorites.each do |tweet|
   .well
     p.inline
       - if tweet.retweet?
@@ -33,11 +31,13 @@
 
     .text-right
       .btn-group
-        = link_to 'Favorite',favorite_tweet_path(tweet), class: "btn", method: :post
+        - if tweet.favorite_users.include? current_user
+          = link_to 'Unfavorite',favorite_tweet_path(tweet), class: "btn", method: :delete
+        -else
+          = link_to 'Favorite',favorite_tweet_path(tweet), class: "btn", method: :post
         = link_to 'Quote', root_path(:tweet_id => tweet.id), class: "btn"
         = link_to 'Retweet', retweet_tweet_path(tweet), class: "btn", method: :post
         - if tweet.user ==  current_user
           = link_to 'Delete', tweet_path(tweet), method: :delete, class: "btn btn-danger"
 
-
-p= will_paginate tweets
+p= will_paginate @favorites
