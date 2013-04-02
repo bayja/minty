@@ -7,4 +7,20 @@ html
 	  = csrf_meta_tags
 
 	body
-		= yield
+		.container
+			.navbar
+				.navbar-inner
+					a.brand href="#" Minty
+					ul.nav
+						li
+							a href="/" Home
+						li
+							= link_to 'User List', users_path
+					ul.nav.pull-right
+						li
+							= link_to 'Log out', logout_path, method: :delete
+			.row
+				.span4
+					' left section
+				.span8
+					= yield

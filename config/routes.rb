@@ -5,7 +5,9 @@ Minty::Application.routes.draw do
     delete 'following' => :unfollow, on: :member
   end
 
-  resources :tweets
+  resources :tweets do
+    post 'retweet' => :retweet, on: :member
+  end
 
   controller :sessions do
     get 'login' => :new

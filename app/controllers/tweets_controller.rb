@@ -65,14 +65,36 @@ class TweetsController < ApplicationController
     @tweet = Tweet.find(params[:id])
 
     if @tweet.user_id  == session[:user_id]
+      @tweet.retweets.destroy_all
+
       @tweet.destroy
     else
-      flash[:notice] = "Tweet Can not be Delete"
+      flash[:notice] = "Tweet can not be deleted"
     end
 
     respond_to do |format|
       format.html { redirect_to tweets_url }
       format.json { head :no_content }
     end    
+  end
+
+  def retweet
+    original_tweet = Tweet.find(params[:id])
+
+    retweet = Tweet.new
+    retweet.user = current_user
+
+    if original_tweet.retweet?
+      retweet.original_tweet = original_tweet.original_tweet
+    else
+      retweet.original_tweet = original_tweet
+    end
+
+    #original_tweet.retweets << retweet
+    retweet.content = "RT"
+    retweet.save!
+
+    flash[:notice] = "Retweeted"
+    redirect_to :root
   end
 end

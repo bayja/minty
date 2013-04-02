@@ -10,8 +10,6 @@
           li= msg
 
   .field
-    = f.label :content
-    br
-    = f.text_area :content, :size => "120x4"
-  .actions
-    = f.submit
+    = f.text_area :content, rows: 4, class: "span8"
+  .actions.text-right
+    = f.submit class: "btn btn-primary"
