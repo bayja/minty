@@ -1,3 +1,6 @@
+p#notice
+  = notice
+
 = form_for(user) do |f|
   - if user.errors.any?
     #error_explanation
@@ -20,6 +23,21 @@
   .field
     = f.check_box :admin
     = f.label :admin
+
+  .field
+    = f.label :address
+    br
+    = f.text_area :address
+
+  .field
+    = f.label :email
+    br
+    = f.email_field :email
+
+  .field
+    = f.label :phone
+    br
+    = f.telephone_field :phone
 
   .actions
     = f.submit
