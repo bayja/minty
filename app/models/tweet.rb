@@ -22,4 +22,5 @@ class Tweet < ActiveRecord::Base
   def retweet?
 		self.original_tweet.present?
   end
+
 end
