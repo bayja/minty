@@ -27,10 +27,13 @@ html
 							= link_to 'Log out', logout_path, method: :delete
 			.row
 				.span4
-					' left section
+					ul
+						li = link_to current_user.name, current_user
+						li = "#{current_user.tweets.count} tweet"
+						li = "followings: #{current_user.followings.count}"  
+						li ="followers: #{current_user.followers.count}" 
 				.span8
 					= yield
-
 		<!-- Modal -->
 		#myModal class="modal hide fade" 	tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"
 		  div class="modal-header"
