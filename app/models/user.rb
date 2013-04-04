@@ -45,4 +45,8 @@ class User < ActiveRecord::Base
   def me_and_followings
     self.followings+[self] 
   end
+
+  def add_to_favorites(tweet)
+    favorite_tweets << tweet 
+  end
 end
