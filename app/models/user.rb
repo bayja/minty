@@ -2,7 +2,7 @@ class User < ActiveRecord::Base
   attr_accessible :name, :description, :admin, :address, :email, :phone
 
   has_many :tweets, order: "created_at desc"
-  
+
   has_many :favorites
   has_many :favorite_tweets, :through => :favorites, :source => :tweet
 
@@ -14,7 +14,7 @@ class User < ActiveRecord::Base
                           :uniq => true
   # has_many :follow_as_follower, foreign_key: 'user_id', class_name: 'Follow'
   # has_many :follow_as_following, foreign_key: 'following_id', class_name: 'Follow'
-  
+
   # has_many :followers, through: :follow_as_follower
   # has_many :followings, through: :follow_as_following
   # # has_many  :followings,
@@ -47,10 +47,10 @@ class User < ActiveRecord::Base
   # end
 
   def me_and_followings
-    self.followings+[self] 
+    self.followings+[self]
   end
 
   def add_to_favorites(tweet)
-    favorite_tweets << tweet 
+    favorite_tweets << tweet
   end
 end
