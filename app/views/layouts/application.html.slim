@@ -8,7 +8,7 @@ html
 
 	body
 		.container
-			.navbar
+			.navbar.navbar-inverse
 				.navbar-inner
 					a.brand href="#" Minty
 					ul.nav
@@ -27,6 +27,7 @@ html
 							li
 								/ = link_to 'Log in', login_path, method: :post
 								a href="#loginModal" role="button" class="" data-toggle="modal" Log in
+								= link_to 'Join', new_user_path, method: :get, class: "btn"
 						- else
 							li
 								= link_to 'Log out', logout_path, method: :delete
@@ -40,7 +41,12 @@ html
 							li = "followings: #{current_user.followings.count}"  
 							li ="followers: #{current_user.followers.count}" 
 				.span8
-					= yield
+					- if current_user.nil?
+						.well
+							' 반갑습니다:) 우측 상단의 'Log in'을 클릭하면 로그인 및 회원가입을 사용하실 수 있습니다.
+						= image_tag 'http://cfile21.uf.tistory.com/image/21630F44516212E116AE9B', width: '100%'
+					- else
+						= yield
 
 		<!- Introduce Modal -->
 		#introductModal class="modal hide fade" 	tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"
@@ -52,23 +58,21 @@ html
 		    ' This WebSite made by Mintech, Absolutely don't same twitter!! 
 		    ' Enjoy Minty!
 		  div class="modal-footer"
-		    button class="btn" data-dismiss="modal" aria-hidden="true" 
-		    ' Close
+		    button class="btn" data-dismiss="modal" aria-hidden="true" Close
 
 		<!- Login Modal -->
 		#loginModal class="modal hide fade" 	tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"
 		  div class="modal-header"
 		    button type="button" class="close" data-dismiss="modal" aria-hidden="true" ×
-		    h3 id="myModalLabel" Login
+		    h3 id="myModalLabel" Welcome to Minty
 		  div class="modal-body"
 		   = form_tag do
 
-			.field
+			.form-inline
 				= label_tag :name, 'Name:'
-				br
 				= text_field :name, params[:name]
-
+				
+			.text-right
+				.form-inline
+					= submit_tag "Login"
 			
-		  div class="modal-footer"
-		    button class="" data-dismiss="modal" aria-hidden="true" 
-		    	= link_to 'Log in', login_path
