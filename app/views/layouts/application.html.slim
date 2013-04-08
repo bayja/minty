@@ -14,10 +14,14 @@ html
 					ul.nav
 						li
 							a href="/" Home
-						li
-							= link_to 'User List', users_path
-						li
-							= link_to 'Favorites', favorites_user_path(current_user)
+						li 
+							a href="#myModal" role="button" class="" data-toggle="modal" Introduce
+						- if !current_user.nil? and current_user.admin?
+							li
+								= link_to 'User List', users_path
+						- if current_user
+							li							
+								= link_to 'Favorites', favorites_user_path(current_user)
 					ul.nav.pull-right
 						li
 							= link_to 'Log out', logout_path, method: :delete
@@ -26,3 +30,16 @@ html
 					' left section
 				.span8
 					= yield
+
+		<!-- Modal -->
+		#myModal class="modal hide fade" 	tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"
+		  div class="modal-header"
+		    button type="button" class="close" data-dismiss="modal" aria-hidden="true" ×
+		    h3 id="myModalLabel" Introduce
+		  div class="modal-body"
+		    p 
+		    ' This WebSite made by Mintech, Absolutely don't same twitter!! 
+		    ' Enjoy Minty!
+		  div class="modal-footer"
+		    button class="btn" data-dismiss="modal" aria-hidden="true" 
+		    ' Close
