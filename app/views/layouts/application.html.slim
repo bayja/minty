@@ -7,7 +7,7 @@ html
 	  = csrf_meta_tags
 
 	body
-		.container  
+		.container 
 			.navbar.navbar-inverse
 				.navbar-inner
 					a.brand href="#" Minty
@@ -34,8 +34,8 @@ html
 							li
 								= link_to 'Log out', logout_path, method: :delete
 
-			.row
-        
+			.row 
+
 				.span4
 					- if !current_user.nil?
 						ul
