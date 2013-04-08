@@ -4,6 +4,7 @@ Minty::Application.routes.draw do
     post 'following' => :follow, on: :member
     delete 'following' => :unfollow, on: :member
     get 'favorites' => :favorites, on: :member
+    get 'find' => :find, on: :collection
   end
 
   resources :tweets do

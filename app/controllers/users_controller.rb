@@ -19,15 +19,16 @@ class UsersController < ApplicationController
   # POST /users
   # POST /users.json
   def create
-    @user = User.new(params[:user])
+    # @user = User.new(params[:user])
 
     respond_to do |format|
-      if @user.save
-        format.html { redirect_to @user, notice: 'User was successfully created.' }
-        format.json { render json: @user, status: :created, location: @user }
+      if user.save
+        session[:user_id] = user.id
+        format.html { redirect_to :root, notice: 'User was successfully created.' }
+        format.json { render json: user, status: :created, location: user }
       else
         format.html { render action: "new", notice: '#{@user} fail to create.' }
-        format.json { render json: @user.errors, status: :unprocessable_entity }
+        format.json { render json: user.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -98,5 +99,8 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
 
     @favorites = @user.favorite_tweets.paginate(page: params[:page], per_page: 100).order('created_at desc')
+  end
+
+  def find
   end
 end
