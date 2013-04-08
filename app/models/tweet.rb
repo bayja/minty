@@ -36,4 +36,13 @@ class Tweet < ActiveRecord::Base
     retweet
   end
 
+  def hash_tags
+    content.scan(/#(\w+)/).flatten
+  end
+
+  def self.with_hash_tag(hash_tag)
+    order('created_at DESC').select do |tweet|
+      tweet.hash_tags.include?(hash_tag)
+    end
+  end
 end
