@@ -10,10 +10,8 @@ html
 		.container
 			.navbar
 				.navbar-inner
-					a.brand href="#" Minty
+					a.brand href="/" Minty
 					ul.nav
-						li
-							a href="/" Home
 						li 
 							a href="#myModal" role="button" class="" data-toggle="modal" Introduce
 						- if !current_user.nil? and current_user.admin?
@@ -22,16 +20,20 @@ html
 						- if current_user
 							li							
 								= link_to 'Favorites', favorites_user_path(current_user)
+							li							
+								= link_to 'Find Users', find_users_path
 					ul.nav.pull-right
-						li
-							= link_to 'Log out', logout_path, method: :delete
+						- unless current_user.nil?
+							li
+								= link_to 'Log out', logout_path, method: :delete
 			.row
 				.span4
 					ul
-						li = link_to current_user.name, current_user
-						li = "#{current_user.tweets.count} tweet"
-						li = "followings: #{current_user.followings.count}"  
-						li ="followers: #{current_user.followers.count}" 
+						- if current_user
+							li = link_to current_user.name, current_user
+							li = "#{current_user.tweets.count} tweet"
+							li = "followings: #{current_user.followings.count}"  
+							li ="followers: #{current_user.followers.count}" 
 				.span8
 					= yield
 		<!-- Modal -->

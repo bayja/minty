@@ -1,0 +1,9 @@
+= form_tag do
+  .field
+    = label_tag :name, 'Name:'
+    = text_field :name, params[:name]
+
+  .actions
+    = submit_tag "찾기", class: 'btn'
+
+
