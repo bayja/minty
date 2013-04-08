@@ -28,10 +28,11 @@ html
 			.row
 				.span4
 					ul
-						li = link_to current_user.name, current_user
-						li = "#{current_user.tweets.count} tweet"
-						li = "followings: #{current_user.followings.count}"  
-						li ="followers: #{current_user.followers.count}" 
+						- if current_user
+							li = link_to current_user.name, current_user
+							li = "#{current_user.tweets.count} tweet"
+							li = "followings: #{current_user.followings.count}"  
+							li ="followers: #{current_user.followers.count}" 
 				.span8
 					= yield
 		<!-- Modal -->
