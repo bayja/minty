@@ -15,7 +15,7 @@ html
 						li
 							a href="/" Home
 						li 
-							a href="#myModal" role="button" class="" data-toggle="modal" Introduce
+							a href="#introductModal" role="button" class="" data-toggle="modal" Introduce
 						- if !current_user.nil? and current_user.admin?
 							li
 								= link_to 'User List', users_path
@@ -23,19 +23,27 @@ html
 							li							
 								= link_to 'Favorites', favorites_user_path(current_user)
 					ul.nav.pull-right
-						li
-							= link_to 'Log out', logout_path, method: :delete
+						- if current_user.nil?
+							li
+								/ = link_to 'Log in', login_path, method: :post
+								a href="#loginModal" role="button" class="" data-toggle="modal" Log in
+						- else
+							li
+								= link_to 'Log out', logout_path, method: :delete
+
 			.row
 				.span4
-					ul
-						li = link_to current_user.name, current_user
-						li = "#{current_user.tweets.count} tweet"
-						li = "followings: #{current_user.followings.count}"  
-						li ="followers: #{current_user.followers.count}" 
+					- if !current_user.nil?
+						ul
+							li = link_to current_user.name, current_user
+							li = "#{current_user.tweets.count} tweet"
+							li = "followings: #{current_user.followings.count}"  
+							li ="followers: #{current_user.followers.count}" 
 				.span8
 					= yield
-		<!-- Modal -->
-		#myModal class="modal hide fade" 	tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"
+
+		<!- Introduce Modal -->
+		#introductModal class="modal hide fade" 	tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"
 		  div class="modal-header"
 		    button type="button" class="close" data-dismiss="modal" aria-hidden="true" ×
 		    h3 id="myModalLabel" Introduce
@@ -46,3 +54,21 @@ html
 		  div class="modal-footer"
 		    button class="btn" data-dismiss="modal" aria-hidden="true" 
 		    ' Close
+
+		<!- Login Modal -->
+		#loginModal class="modal hide fade" 	tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"
+		  div class="modal-header"
+		    button type="button" class="close" data-dismiss="modal" aria-hidden="true" ×
+		    h3 id="myModalLabel" Login
+		  div class="modal-body"
+		   = form_tag do
+
+			.field
+				= label_tag :name, 'Name:'
+				br
+				= text_field :name, params[:name]
+
+			
+		  div class="modal-footer"
+		    button class="" data-dismiss="modal" aria-hidden="true" 
+		    	= link_to 'Log in', login_path
