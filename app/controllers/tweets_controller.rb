@@ -80,19 +80,7 @@ class TweetsController < ApplicationController
 
   def retweet
     original_tweet = Tweet.find(params[:id])
-
-    retweet = Tweet.new
-    retweet.user = current_user
-
-    if original_tweet.retweet?
-      retweet.original_tweet = original_tweet.original_tweet
-    else
-      retweet.original_tweet = original_tweet
-    end
-
-    #original_tweet.retweets << retweet
-    retweet.content = "RT"
-    retweet.save!
+    original_tweet.retweet(current_user)
 
     flash[:notice] = "Retweeted"
     redirect_to :root

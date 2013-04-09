@@ -23,4 +23,17 @@ class Tweet < ActiveRecord::Base
 		self.original_tweet.present?
   end
 
+  def retweet(user)
+    retweet = Tweet.new(content: "RT", user_id: user.id)
+  
+    if self.retweet?
+      retweet.original_tweet = self.original_tweet
+    else
+      retweet.original_tweet = self
+    end
+
+    retweet.save
+    retweet
+  end
+
 end

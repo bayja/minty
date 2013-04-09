@@ -1,0 +1,10 @@
+p
+	b="followings: #{user.followings.count}"
+	- user.followings.each do |following|
+		br
+		= link_to following.name, user_path(following.id) 
+p
+	b="followers: #{user.followers.count}"
+	- user.followers.each do |follower| 
+		br
+		= link_to follower.name, follower

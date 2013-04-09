@@ -1,0 +1,14 @@
+#loginModal class="modal hide fade" 	tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"
+  div class="modal-header"
+    button type="button" class="close" data-dismiss="modal" aria-hidden="true" ×
+    h3 id="myModalLabel" Welcome to Minty
+  div class="modal-body"
+   = form_tag do
+
+	.form-inline
+		= label_tag :name, 'Name:'
+		= text_field :name, params[:name]
+		
+	.text-right
+		.form-inline
+			= submit_tag "Login"

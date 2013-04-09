@@ -7,37 +7,9 @@
     ' Listing Favorite Tweets
     small #{@user.name}
 
-- @favorites.each do |tweet|
-  .well
-    p.inline
-      - if tweet.retweet?
-        b= link_to tweet.original_tweet.user.name, tweet.original_tweet.user
-        '  retweet by 
-        b= link_to tweet.user.name, tweet.user 
-      - else
-        b= link_to tweet.user.name, tweet.user        
-    
-      - unless tweet.user.id ==  current_user.id
-        '
-        - if current_user.followings.include? tweet.user
-          =  link_to 'UnFollow', following_user_path(tweet.user.id), method: :delete, class: "btn btn-mini"
-        - else
-          =  link_to 'Follow', following_user_path(tweet.user.id), method: :post, class: 'btn btn-mini'
+/ - @favorites.each do |favorite|
+/   = render '/tweets/tweet', tweet: favorite
 
-    - if tweet.retweet?
-      = tweet.original_tweet.content
-    - else
-      = tweet.content
-
-    .text-right
-      .btn-group
-        - if tweet.favorite_users.include? current_user
-          = link_to 'Unfavorite',favorite_tweet_path(tweet), class: "btn", method: :delete
-        -else
-          = link_to 'Favorite',favorite_tweet_path(tweet), class: "btn", method: :post
-        = link_to 'Quote', root_path(:tweet_id => tweet.id), class: "btn"
-        = link_to 'Retweet', retweet_tweet_path(tweet), class: "btn", method: :post
-        - if tweet.user ==  current_user
-          = link_to 'Delete', tweet_path(tweet), method: :delete, class: "btn btn-danger"
+= render partial: '/tweets/tweet', collection: @favorites
 
 p= will_paginate @favorites

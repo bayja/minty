@@ -26,22 +26,11 @@ p
 	b= "Tweet Count:"
 	= user.tweets.count
 
-	- user.tweets.each do |tweet|
-		p
-			= "[#{l tweet.created_at, format: :long}] "
-			= tweet.content
-		hr
 
-p
-	b="followings: #{user.followings.count}"
-	- user.followings.each do |following|
-		br
-		= link_to following.name, user_path(following.id) 
-p
-	b="followers: #{user.followers.count}"
-	- user.followers.each do |follower| 
-		br
-		= link_to follower.name, follower
+= render :partial => '/tweets/tweet', collection: user.tweets
+	
+
+= render 'following', user: user
 
 - if current_user == user or current_user.admin?
 	= link_to 'Edit', edit_user_path(user)

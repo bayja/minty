@@ -8,72 +8,16 @@ html
 
 	body
 		.container 
-			.navbar.navbar-inverse
-				.navbar-inner
-					a.brand href="/" Minty
-					ul.nav
-						li 
-							a href="#introductModal" role="button" class="" data-toggle="modal" Introduce
-						- if !current_user.nil? and current_user.admin?
-							li
-								= link_to 'User List', users_path
-						- if current_user
-							li							
-								= link_to 'Favorites', favorites_user_path(current_user)
-							li							
-								= link_to 'Find Users', find_users_path
-					ul.nav.pull-right
-						- if current_user.nil?
-							li
-								/ = link_to 'Log in', login_path, method: :post
-								a href="#loginModal" role="button" class="" data-toggle="modal" Log in
-							li
-								= link_to 'Join', new_user_path
-						- else
-							li
-								= link_to 'Log out', logout_path, method: :delete
-
+			= render "/layouts/navbar"
 			.row 
-
 				.span4
-					- if !current_user.nil?
-						ul
-							li = link_to current_user.name, current_user
-							li = "#{current_user.tweets.count} tweet"
-							li = "followings: #{current_user.followings.count}"  
-							li ="followers: #{current_user.followers.count}" 
-					- else 
-						.ul.thumbnails
- 							li
- 								= image_tag 'http://mylogo.incruit.com/2009/07/mint_logo_2009727143419.jpg', width: '100%'
+					= render "/layouts/sidebar"
 				.span8
+					= render '/shared/notice', notice: notice
 					= yield
 
 		<!- Introduce Modal -->
-		#introductModal class="modal hide fade" 	tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"
-		  div class="modal-header"
-		    button type="button" class="close" data-dismiss="modal" aria-hidden="true" ×
-		    h3 id="myModalLabel" Introduce
-		  div class="modal-body"
-		    p 
-		    ' This WebSite made by Mintech, Absolutely don't same twitter!! 
-		    ' Enjoy Minty!
-		  div class="modal-footer"
-		    button class="btn" data-dismiss="modal" aria-hidden="true" Close
+		= render "/layouts/introduce_modal"
 
 		<!- Login Modal -->
-		#loginModal class="modal hide fade" 	tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"
-		  div class="modal-header"
-		    button type="button" class="close" data-dismiss="modal" aria-hidden="true" ×
-		    h3 id="myModalLabel" Welcome to Minty
-		  div class="modal-body"
-		   = form_tag do
-
-			.form-inline
-				= label_tag :name, 'Name:'
-				= text_field :name, params[:name]
-				
-			.text-right
-				.form-inline
-					= submit_tag "Login"
-			
+		= render "/layouts/login_modal"
