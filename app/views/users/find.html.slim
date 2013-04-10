@@ -1,9 +1,18 @@
-= form_tag do
+= form_tag find_users_path, method: 'get' do
   .field
     = label_tag :name, 'Name:'
-    = text_field :name, params[:name]
+    = text_field :name, params[:search]
 
   .actions
-    = submit_tag "찾기", class: 'btn'
+    = submit_tag "찾기", class: 'btn', name: nil
+
+/ = @find_users
 
 
+ul
+ - if params[:search].blank?
+   ' Your search results here.
+ - else
+   - @find_users.each do |user|
+     li
+       = user.name

@@ -102,5 +102,10 @@ class UsersController < ApplicationController
   end
 
   def find
+    @find_users = User.search(params[:search])
+
+    respond_to do |format|
+      format.html# { redirect_to users_url }
+    end
   end
 end
