@@ -1,5 +1,10 @@
 module TweetsHelper
-	def add_link_to_hash_tag(content)
+	def add_link_to_hash_tags(content)
+		tags = hash_tags(content)
+		tags.each do |tag|
+			content.gsub!(tag, "<a href='/hash_tags/#{tag[1..-1]}'>#{tag}</a>")
+		end
+		content
 	end
 
 	def hash_tags(content)
@@ -7,4 +12,6 @@ module TweetsHelper
 			"#" + tag
 	  end
 	end
+
+
 end
