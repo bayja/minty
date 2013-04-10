@@ -7,17 +7,38 @@ html
 	  = csrf_meta_tags
 
 	body
-		.container 
-			= render "/layouts/navbar"
-			.row 
-				.span4
-					= render "/layouts/sidebar"
-				.span8
-					= render '/shared/notice', notice: notice
-					= yield
+		- if current_user.nil?
+      .unlogin_body
 
-		<!- Introduce Modal -->
-		= render "/layouts/introduce_modal"
+        .container 
+          = render "/layouts/navbar"
+          .row 
+            .span4
+              = render "/layouts/sidebar"
+            .span8
+              = render '/shared/notice', notice: notice
+              = yield
 
-		<!- Login Modal -->
-		= render "/layouts/login_modal"
+        <!- Introduce Modal -->
+        = render "/layouts/introduce_modal"
+
+        <!- Login Modal -->
+        = render "/layouts/login_modal", user: :user
+        
+    - else 
+      .login_body
+
+    		.container 
+    			= render "/layouts/navbar"
+    			.row 
+    				.span4
+    					= render "/layouts/sidebar"
+    				.span8
+    					= render '/shared/notice', notice: notice
+    					= yield
+
+    		<!- Introduce Modal -->
+    		= render "/layouts/introduce_modal"
+
+    		<!- Login Modal -->
+    		= render "/layouts/login_modal", user: :user

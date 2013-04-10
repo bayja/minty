@@ -1,5 +1,7 @@
 class User < ActiveRecord::Base
-  attr_accessible :name, :description, :admin, :address, :email, :phone
+  attr_accessible :name, :description, :admin, :address, :email, :phone, :password, :password_confirmation
+
+  has_secure_password
 
   has_many :tweets, order: "created_at desc"
 
@@ -38,6 +40,8 @@ class User < ActiveRecord::Base
   
   validates :email, :format => { :with => /^[a-zA-Z0-9_]+\@[a-zA-Z0-9_]+\.[a-zA-Z0-9_]+.[a-zA-Z0-9_]*$/ }
 
+  validates :password, :presence => true
+  validates :password, :length => {:minimum => 6, :maximum =>12}
   # validate :check_following_in_my_id
 
   # def check_following_in_my_id
