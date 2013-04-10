@@ -11,3 +11,14 @@
  *= require_self
  *= require_tree .
  */
+
+
+.unlogin_body { 
+        background: url('http://cfile26.uf.tistory.com/image/0328893B51621A9014B2CF') no-repeat center center fixed; 
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
+        background-size: cover;
+        height: 1000px
+}
+
