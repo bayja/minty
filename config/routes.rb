@@ -19,7 +19,7 @@ Minty::Application.routes.draw do
     delete 'logout' => :destroy
   end
 
-  get '/hash_tags/heaven'
+  get '/hash_tags/:hash_tag' => "hash_tags#with_tag"
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
