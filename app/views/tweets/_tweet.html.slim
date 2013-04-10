@@ -17,7 +17,7 @@
   - if tweet.retweet?
     = tweet.original_tweet.content
   - else
-    = tweet.content
+    = add_link_to_hash_tag tweet.content
 
   .text-right
     .btn-group
