@@ -4,8 +4,16 @@
 		li = "#{current_user.tweets.count} tweet"
 	= render '/users/following', user: current_user
 - else 
-	ul
-		.thumbnails
-			li
-				= image_tag 'http://mylogo.incruit.com/2009/07/mint_logo_2009727143419.jpg', width: '100%'
+	.sidebar-profile
+		.well
+			ul
+				.thumbnails
+					li
+						= image_tag 'http://mylogo.incruit.com/2009/07/mint_logo_2009727143419.jpg', width: '100%'
+					li
+						strong Welcome to Minty	
+						br 
+							This Service is ........... 
+					li
+						= link_to 'Go Mintech Homepage', 'http://mintech.kr', class: "btn btn-mini btn-info"
 			

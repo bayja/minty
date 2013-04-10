@@ -16,6 +16,14 @@ p#notice
     = f.text_field :name 
 
   .field
+    = f.label :password, 'Password'
+    = f.password_field :password, size: 10
+
+  .field
+    = f.label :password_confirmation, 'Confirm'
+    = f.password_field :password_confirmation, size: 10
+
+  .field
     = f.label :description
     br
     = f.text_area :description, :size => "100x4"

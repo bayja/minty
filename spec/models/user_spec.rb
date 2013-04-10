@@ -3,11 +3,11 @@
 require 'spec_helper'
 
 describe User do
-  context "validation" do
-    let(:valid_attrs) do
-      {name: "abcde"}
-    end
+  let(:valid_attrs) do
+    {name: "abcde", password: "123456", email: "a@a.com", phone: "010-2222-0000"}
+  end
 
+  context "validation" do
     it '제대로된 값을 가지고는 user가 만들어진다.' do
       user = User.new(valid_attrs)
       user.should be_valid
@@ -45,7 +45,7 @@ describe User do
     end
 
     it '이름은 40자 이하여야 한다' do
-      user = User.new(name: "0123456789012345678901234567890123456789")
+      user = User.new(valid_attrs.merge(name: "0123456789012345678901234567890123456789"))
       user.should be_valid
 
       user = User.new(valid_attrs.merge(name: "01234567890123456789012345678901234567891"))
@@ -62,12 +62,35 @@ describe User do
   end
 
   context 'favorite_tweets' do
-  	let(:user) { User.create! name:'tester' }
+  	let(:user) { User.create! name:'tester', password: "123456", email: "a@a.com", phone: "010-2222-0000" }
   	let(:tweet) { Tweet.create! content: 'test content' }
 
   	it 'should add tweet to my favorites list' do
   		user.add_to_favorites tweet
   		user.favorite_tweets.should include(tweet)
   	end
+  end
+
+  it '유저의 트윗 목록의 순서가 최신 순으로 정렬되어야 한다.' do
+    user = User.create!(valid_attrs)
+    tweet1 = Tweet.create!(content: "dkdk", user_id: user.id)
+    tweet2 = Tweet.create!(content: "dhdh", user_id: user.id)
+
+    user.tweets.first.should == tweet2
+  end
+  
+  context "user password" do
+    it '유저의 비밀번호는 없으면 안된다.' do
+      user = User.new(valid_attrs.merge(password: nil))
+      user.should_not be_valid
+    end
+
+    it '유저의 비밀번호는 6자리 이상 12자리 이하여야 한다.' do
+      user1 = User.new(valid_attrs.merge(password: "1234"))
+      user1.should_not be_valid
+
+      user2 = User.new(valid_attrs.merge(password: "123456789101123"))
+      user2.should_not be_valid
+    end
   end
 end
