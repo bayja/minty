@@ -4,7 +4,7 @@ module TweetsHelper
 		tags.each do |tag|
 			content.gsub!(tag, "<a href='/hash_tags/#{tag[1..-1]}'>#{tag}</a>")
 		end
-		content
+		raw content
 	end
 
 	def hash_tags(content)
