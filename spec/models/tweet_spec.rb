@@ -61,7 +61,7 @@ describe Tweet do
 			tweet = Tweet.create(content: "test #minty #heaven end")
 			tweet.hash_tags.should == ["minty", "heaven"]
 		end
-
+		
 		it 'hash tag가 없으면 안 읽는다' do
 			tweet = Tweet.create(content: "test heaven end")
 			tweet.hash_tags.should == []			
