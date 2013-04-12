@@ -18,17 +18,27 @@ describe User do
   it '이름이 없으면 저장되지 않는다.' do
     u = User.new(valid_attrs.merge(name: nil))
     u.save.should == false
+    u.errors.has_key?(:name).should == true
   end
 
   it '이름의 길이가 4자 이상이어야 한다.' do
     u = User.new(valid_attrs.merge(name: 'abc'))
     u.save.should == false
+    u.errors.has_key?(:name).should == true
   end
 
   it '이름의 길이가 40자 이하여야 한다.' do
     name = "a" * 41
     u = User.new(valid_attrs.merge(name: name))
     u.save.should == false
+    u.errors.has_key?(:name).should == true
+  end
+
+  it '이름은 중복되면 안된다.' do
+    User.create!(valid_attrs)
+    u = User.new(valid_attrs)
+    u.save.should == false
+    u.errors.has_key?(:name).should == true
   end
 
 

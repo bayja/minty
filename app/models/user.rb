@@ -1,17 +1,41 @@
+# encoding: utf-8
 class User < ActiveRecord::Base
   # validates :name, :presence => true
   # validates :name, :length => {:minimum => 4, :maximum =>40}
+  # validates :name, :uniqueness => true
 
   def save(*)
-    return false if name.blank?
-    return false if invalid_length?
+    return false if name_blank?
+    return false unless valid_length?
+    return false unless unique_name?
 
     super
     true
   end
 
-  def invalid_length?
-    ! (name.length >= 4 and name.length <= 40)
+  def name_blank?
+    if name.blank?
+      errors.add(:name, "이름은 필수항목입니다.")
+      true
+    end
+  end
+
+  def valid_length?
+    if (name.length >= 4 and name.length <= 40)
+      true
+    else
+      errors.add(:name, "길이가 잘못되었어요.")
+      false
+    end
+  end
+
+  def unique_name?
+    if User.where(name: name).count == 0
+      true
+    else
+      errors.add(:name, "이름은 중복되면 안됩니다.")
+      false
+    end
   end
 
 
