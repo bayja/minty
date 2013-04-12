@@ -1,40 +1,42 @@
 # encoding: utf-8
+
 class User < ActiveRecord::Base
   # validates :name, :presence => true
+  # validates :email, :presence => true
   # validates :name, :length => {:minimum => 4, :maximum =>40}
   # validates :name, :uniqueness => true
 
   def save(*)
-    return false if name_blank?
-    return false unless valid_length?
-    return false unless unique_name?
+    validates_presence_of :name
+    validates_presence_of :email
+    validates_length_of :name, {:minimum => 4, :maximum =>40}
+    validates_uniqueness_of :name
 
-    super
-    true
-  end
-
-  def name_blank?
-    if name.blank?
-      errors.add(:name, "이름은 필수항목입니다.")
-      true
-    end
-  end
-
-  def valid_length?
-    if (name.length >= 4 and name.length <= 40)
+    if errors.keys.count == 0
+      super
       true
     else
-      errors.add(:name, "길이가 잘못되었어요.")
       false
     end
   end
 
-  def unique_name?
-    if User.where(name: name).count == 0
-      true
-    else
-      errors.add(:name, "이름은 중복되면 안됩니다.")
-      false
+  def validates_presence_of(key)
+    if send(key).blank?
+      errors.add(key, "이름은 필수항목입니다.")
+    end
+  end
+
+  def validates_length_of(key, options)
+    val = send(key).to_s
+    if !(val.length >= options[:minimum] and val.length <= options[:maximum])
+      errors.add(key, "길이가 잘못되었어요.")
+    end
+  end
+
+  def validates_uniqueness_of(key)
+    query_options = { key => send(key) }
+    if User.where( query_options ).count != 0
+      errors.add(key, "#{key}: 중복되면 안됩니다.")
     end
   end
 

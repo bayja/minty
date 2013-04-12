@@ -5,7 +5,8 @@ require 'spec_helper'
 describe User do
   let(:valid_attrs) do
     {
-      name: "my_name"
+      name: "my_name",
+      email: "abc@minty.com"
     }
   end
 
@@ -39,6 +40,12 @@ describe User do
     u = User.new(valid_attrs)
     u.save.should == false
     u.errors.has_key?(:name).should == true
+  end
+
+  it '이메일은 없으면 안된다.' do
+    u = User.new(valid_attrs.merge(email: nil))
+    u.save.should == false
+    u.errors.has_key?(:email).should == true
   end
 
 
