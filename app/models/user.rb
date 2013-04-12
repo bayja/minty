@@ -1,7 +1,35 @@
 class User < ActiveRecord::Base
+  # validates :name, :presence => true
+  # validates :name, :length => {:minimum => 4, :maximum =>40}
+
+  def save(*)
+    return false if name.blank?
+    return false if invalid_length?
+
+    super
+    true
+  end
+
+  def invalid_length?
+    ! (name.length >= 4 and name.length <= 40)
+  end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   attr_accessible :name, :description, :admin, :address, :email, :phone, :password, :password_confirmation
 
-  has_secure_password
+  # has_secure_password
 
   has_many :tweets, order: "created_at desc"
 
@@ -30,18 +58,18 @@ class User < ActiveRecord::Base
                           :association_foreign_key => 'user_id',
                           :uniq => true
 
-  validates :name, :uniqueness => true
-  validates :name, :presence => true
-  validates :name, :length => {:minimum => 4, :maximum =>40}
-  validates :name, :format => { :with => /^[a-zA-Z0-9_]+$/,
-    :message => "Only letters and digit and underbar allowed" }
-  
-  validates :phone, :format => { :with => /^[0-9]{3,}\-[0-9]{3,}\-[0-9]{4,}$/ }
-  
-  validates :email, :format => { :with => /^[a-zA-Z0-9_]+\@[a-zA-Z0-9_]+\.[a-zA-Z0-9_]+.[a-zA-Z0-9_]*$/ }
+  # validates :name, :uniqueness => true
+  # validates :name, :presence => true
+  # validates :name, :length => {:minimum => 4, :maximum =>40}
+  # validates :name, :format => { :with => /^[a-zA-Z0-9_]+$/,
+  #   :message => "Only letters and digit and underbar allowed" }
 
-  validates :password, :presence => true
-  validates :password, :length => {:minimum => 6, :maximum =>12}
+  # validates :phone, :format => { :with => /^[0-9]{3,}\-[0-9]{3,}\-[0-9]{4,}$/ }
+
+  # validates :email, :format => { :with => /^[a-zA-Z0-9_]+\@[a-zA-Z0-9_]+\.[a-zA-Z0-9_]+.[a-zA-Z0-9_]*$/ }
+
+  # validates :password, :presence => true
+  # validates :password, :length => {:minimum => 6, :maximum =>12}
   # validate :check_following_in_my_id
 
   # def check_following_in_my_id
