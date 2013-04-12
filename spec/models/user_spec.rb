@@ -42,11 +42,19 @@ describe User do
     u.errors.has_key?(:name).should == true
   end
 
+  it '이름은 영문대소문자, 숫자, 언더바만 쓸 수 있다.' do
+    u = User.new(valid_attrs.merge(name: '   -%% '))
+    u.save.should == false
+    u.errors.has_key?(:name).should == true
+  end
+
+
   it '이메일은 없으면 안된다.' do
     u = User.new(valid_attrs.merge(email: nil))
     u.save.should == false
     u.errors.has_key?(:email).should == true
   end
+
 
 
 

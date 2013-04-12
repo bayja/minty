@@ -1,16 +1,73 @@
 # encoding: utf-8
 
+module MintyValidator
+  class Base
+    def initialize(key, base, options)
+      @key = key
+      @base = base
+      @options = options
+    end
+  end
+
+  class PresenceValidator < Base
+    def validate
+      if @base.send(@key).blank?
+        @base.errors.add(@key, "이름은 필수항목입니다.")
+      end
+    end
+  end
+
+  class UniquenessValidator < Base
+    def validate
+      query_options = { @key => @base.send(@key) }
+      if @base.class.where( query_options ).count != 0
+        @base.errors.add(@key, "#{@key}: 중복되면 안됩니다.")
+      end
+    end
+  end
+
+  class LengthValidator < Base
+    def validate
+      val = @base.send(@key).to_s
+      if @options[:minimum]
+        unless val.length >= @options[:minimum]
+          @base.errors.add(@key, "길이가 너무 짧아요.")
+        end
+      end
+
+      if @options[:maximum]
+        unless val.length <= @options[:maximum]
+          @base.errors.add(@key, "길이가 너무 길어요.")
+        end
+      end
+    end
+  end
+
+  class FormatValidator < Base
+    def validate
+      val = @base.send(@key).to_s
+      unless val.match(@options[:with])
+        @base.errors.add(@key, "잘못된 문자가 들어갔습니다.")
+      end
+    end
+  end
+end
+
+
 class User < ActiveRecord::Base
   # validates :name, :presence => true
   # validates :email, :presence => true
   # validates :name, :length => {:minimum => 4, :maximum =>40}
   # validates :name, :uniqueness => true
+  # validates :name, :format => { :with => /^[a-zA-Z0-9_]+$/
+
 
   def save(*)
-    validates_presence_of :name
-    validates_presence_of :email
-    validates_length_of :name, {:minimum => 4, :maximum =>40}
-    validates_uniqueness_of :name
+    validates :name, presence: true
+    validates :email, presence: true
+    validates :name, uniqueness: true
+    validates :name, length: {:minimum => 4, :maximum =>40}
+    validates :name, :format => { :with => /^[a-zA-Z0-9_]+$/ }
 
     if errors.keys.count == 0
       super
@@ -20,25 +77,13 @@ class User < ActiveRecord::Base
     end
   end
 
-  def validates_presence_of(key)
-    if send(key).blank?
-      errors.add(key, "이름은 필수항목입니다.")
-    end
+  def validates(key, options)
+    validator_name = options.keys.first
+    validator = "MintyValidator::#{validator_name.to_s.capitalize}Validator".constantize
+    validator.new(key, self, options[validator_name]).validate
   end
 
-  def validates_length_of(key, options)
-    val = send(key).to_s
-    if !(val.length >= options[:minimum] and val.length <= options[:maximum])
-      errors.add(key, "길이가 잘못되었어요.")
-    end
-  end
 
-  def validates_uniqueness_of(key)
-    query_options = { key => send(key) }
-    if User.where( query_options ).count != 0
-      errors.add(key, "#{key}: 중복되면 안됩니다.")
-    end
-  end
 
 
 
