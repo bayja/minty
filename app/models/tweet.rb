@@ -2,7 +2,7 @@ class Tweet < ActiveRecord::Base
 
   belongs_to :user
 
-  attr_accessible :content, :user_id
+  attr_accessible :content, :user_id, :link
 
 	has_many :retweets, :class_name => "Tweet", :foreign_key => "retweet_id"
 
@@ -15,6 +15,8 @@ class Tweet < ActiveRecord::Base
   validates :content, :presence => true
   
   validates :user_id, :presence => { :presence => true, :message => "Can not find user name" }
+
+  before_create :add_http_to_image_url
 
   scope :tweets, includes(:user).order("created_at DESC")
   scope :timeline_for, lambda { |users| where(user_id: users) }
@@ -42,5 +44,11 @@ class Tweet < ActiveRecord::Base
 
   def self.with_hash_tag(hash_tag)
     where("content LIKE ?", "%##{hash_tag}%").order('created_at DESC')
+  end
+
+  def add_http_to_image_url
+    if self.link.present?
+      self.link = "http://#{link}" unless self.link.match(/^http/)
+    end
   end
 end

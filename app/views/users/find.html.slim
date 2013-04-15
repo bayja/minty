@@ -15,4 +15,4 @@ ul
 	- else
 		- @find_users.each do |user|
 			li
-				= user.name
+				= link_to user.name, user_path(user)
