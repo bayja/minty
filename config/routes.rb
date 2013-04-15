@@ -11,6 +11,7 @@ Minty::Application.routes.draw do
     post 'retweet' => :retweet, on: :member
     post 'favorite' => :favorite, on: :member
     delete 'favorite' => :unfavorite, on: :member
+    get 'find' => :find, on: :collection
   end
 
   controller :sessions do

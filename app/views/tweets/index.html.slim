@@ -2,8 +2,20 @@
   h1 
     ' Listing tweets
     small #{current_user.name}
+    = form_tag find_tweets_path, method: 'get' do
+      .form-inline.text-right
+        = label_tag :search, ''
+        = text_field_tag :search, params[:search], placeholder: "Search"
+        '  
+        = submit_tag "찾기", class: 'btn'
 
 = render 'form'
-= render tweets
+- unless @search_tweets
+  = render tweets
+- else 
+  = render partial: 'tweet', collection: @search_tweets
 
 p= will_paginate tweets
+
+
+

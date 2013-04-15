@@ -4,12 +4,12 @@ class Tweet < ActiveRecord::Base
 
   attr_accessible :content, :user_id
 
-	has_many :retweets, :class_name => "Tweet", :foreign_key => "retweet_id"
+  has_many :retweets, :class_name => "Tweet", :foreign_key => "retweet_id"
 
-	has_many :favorites
-	has_many :favorite_users, :through => :favorites, :source => :user
+  has_many :favorites
+  has_many :favorite_users, :through => :favorites, :source => :user
 
-	belongs_to :original_tweet, :class_name => "Tweet", :foreign_key => "retweet_id"
+  belongs_to :original_tweet, :class_name => "Tweet", :foreign_key => "retweet_id"
 
   validates :content, :length => { :maximum => 140 }
   validates :content, :presence => true
@@ -20,7 +20,7 @@ class Tweet < ActiveRecord::Base
   scope :timeline_for, lambda { |users| where(user_id: users) }
 
   def retweet?
-		self.original_tweet.present?
+    self.original_tweet.present?
   end
 
   def retweet(user)
@@ -42,5 +42,11 @@ class Tweet < ActiveRecord::Base
 
   def self.with_hash_tag(hash_tag)
     where("content LIKE ?", "%##{hash_tag}%").order('created_at DESC')
+  end
+
+  def self.search(search)
+    if search
+      where("content like ?", "%#{search}%")
+    end
   end
 end

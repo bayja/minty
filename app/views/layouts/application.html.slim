@@ -1,44 +1,40 @@
 doctype html
 html
-	head
-	  title Minty
-	  = stylesheet_link_tag    "application", :media => "all"
-	  = javascript_include_tag "application"
-	  = csrf_meta_tags
+  head
+    title Minty
+    = stylesheet_link_tag    "application", :media => "all"
+    = javascript_include_tag "application"
+    = csrf_meta_tags
 
-	body
-		- if current_user.nil?
-      .unlogin_body
+  body
+    - if current_user.nil?
+      .container 
+        = render "/layouts/navbar"
+        .row 
+          .span4
+            = render "/layouts/sidebar"
+          .span8
+            = render '/shared/notice', notice: notice
+            = yield
 
-        .container 
-          = render "/layouts/navbar"
-          .row 
-            .span4
-              = render "/layouts/sidebar"
-            .span8
-              = render '/shared/notice', notice: notice
-              = yield
+      <!- Introduce Modal -->
+      = render "/layouts/introduce_modal"
+
+      <!- Login Modal -->
+      = render "/layouts/login_modal", user: :user
+        
+    - else 
+      .container 
+        = render "/layouts/navbar"
+        .row 
+          .span4
+            = render "/layouts/sidebar"
+          .span8
+            = render '/shared/notice', notice: notice
+            = yield
 
         <!- Introduce Modal -->
         = render "/layouts/introduce_modal"
 
         <!- Login Modal -->
         = render "/layouts/login_modal", user: :user
-        
-    - else 
-      .login_body
-
-    		.container 
-    			= render "/layouts/navbar"
-    			.row 
-    				.span4
-    					= render "/layouts/sidebar"
-    				.span8
-    					= render '/shared/notice', notice: notice
-    					= yield
-
-    		<!- Introduce Modal -->
-    		= render "/layouts/introduce_modal"
-
-    		<!- Login Modal -->
-    		= render "/layouts/login_modal", user: :user

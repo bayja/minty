@@ -100,4 +100,9 @@ class TweetsController < ApplicationController
     flash[:notice] = "unfavorited!"
     redirect_to :back
   end
+
+  def find
+     @search_tweets = Tweet.search(params[:search])
+     render action: "index"
+  end
 end
