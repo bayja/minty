@@ -22,10 +22,11 @@ ActiveRecord::Schema.define(:version => 20130415005227) do
 
   create_table "tweets", :force => true do |t|
     t.text     "content"
-    t.datetime "created_at",                :null => false
-    t.datetime "updated_at",                :null => false
-    t.integer  "user_id",    :default => 1, :null => false
+    t.datetime "created_at",                   :null => false
+    t.datetime "updated_at",                   :null => false
+    t.integer  "user_id",       :default => 1, :null => false
     t.integer  "retweet_id"
+    t.integer  "retweet_count", :default => 0
     t.string   "link"
   end
 

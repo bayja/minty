@@ -78,13 +78,13 @@ describe Tweet do
 	end
 
 	it '이미지 링크는 http로 시작해야 한다.' do
-		user = User.first
+		user = User.create!(name: "tester", phone: "010-0000-1111", email: "heaven@wangsy.com", password:"123456")
 
 		tweet = Tweet.new
 		tweet.content = "aaaa"
 		tweet.user = user
 		tweet.link = "aaa.jpg"
-		tweet.save
+		tweet.save!
 
 		tweet.link.should == 'http://aaa.jpg'
 	end
