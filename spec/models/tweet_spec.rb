@@ -126,6 +126,7 @@ describe Tweet do
 		end
 	end
 
+
   context 'find tweet' do
     it '의 내용을 검색할 수 있다.' do
       Tweet.create!(content: "test content")
@@ -133,4 +134,16 @@ describe Tweet do
       tweet.first.content.should == "test content"
     end 
   end
+
+	it '이미지 링크는 http로 시작해야 한다.' do
+		user = User.create!(name: "tester", phone: "010-0000-1111", email: "heaven@wangsy.com", password:"123456")
+
+		tweet = Tweet.new
+		tweet.content = "aaaa"
+		tweet.user = user
+		tweet.link = "aaa.jpg"
+		tweet.save!
+
+		tweet.link.should == 'http://aaa.jpg'
+	end
 end

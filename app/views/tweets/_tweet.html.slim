@@ -6,6 +6,10 @@
       b= link_to tweet.user.name, tweet.user 
     - else
       b= link_to tweet.user.name, tweet.user        
+
+    '     
+    = time_ago_in_words(tweet.created_at)
+    '  ago
   
     - unless tweet.user.id ==  current_user.id
       '
@@ -18,6 +22,10 @@
     = tweet.original_tweet.content
   - else
     = add_link_to_hash_tags tweet.content
+
+  - if tweet.link.present?
+    p
+      = link_to (image_tag tweet.link), tweet.link
 
   .text-right
     .btn-group
