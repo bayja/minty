@@ -100,4 +100,8 @@ class TweetsController < ApplicationController
     flash[:notice] = "unfavorited!"
     redirect_to :back
   end
+
+  def popluar_tweets
+    @tweets = Tweet.find_many_retweets
+  end
 end
