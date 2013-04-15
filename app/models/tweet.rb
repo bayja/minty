@@ -2,7 +2,7 @@ class Tweet < ActiveRecord::Base
 
   belongs_to :user
 
-  attr_accessible :content, :user_id
+  attr_accessible :content, :user_id, :retweet_count
 
   has_many :retweets, :class_name => "Tweet", :foreign_key => "retweet_id"
 
@@ -32,6 +32,10 @@ class Tweet < ActiveRecord::Base
       retweet.original_tweet = self
     end
 
+    # retweet.original_tweet.retweet_count += 1
+    retweet.original_tweet.retweet_count = retweet.original_tweet.retweet_count + 1
+
+    retweet.original_tweet.save
     retweet.save
     retweet
   end
@@ -44,6 +48,10 @@ class Tweet < ActiveRecord::Base
     where("content LIKE ?", "%##{hash_tag}%").order('created_at DESC')
   end
 
+  def self.find_many_retweets
+    where('retweet_count > 0').order('retweet_count DESC')
+  end
+  
   def self.search(search)
     if search
       where("content like ?", "%#{search}%")

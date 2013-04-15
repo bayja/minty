@@ -101,6 +101,10 @@ class TweetsController < ApplicationController
     redirect_to :back
   end
 
+  def popluar_tweets
+    @tweets = Tweet.find_many_retweets
+  end
+
   def find
      @search_tweets = Tweet.search(params[:search])
      render action: "index"
