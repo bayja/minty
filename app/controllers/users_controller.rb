@@ -16,10 +16,6 @@ class UsersController < ApplicationController
   expose(:users)
   expose(:user)
 
-  # def edit
-  #   @user = User.find params[:id]
-  # end
-
   # POST /users
   # POST /users.json
   def create
