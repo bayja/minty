@@ -1,9 +1,10 @@
 class User < ActiveRecord::Base
-  attr_accessible :name, :description, :admin, :address, :email, :phone, :password, :password_confirmation
+  attr_accessible :name, :description, :admin, :address, :email, :phone, :password, :password_confirmation, :profile_image
 
   has_secure_password
 
   has_many :tweets, order: "created_at desc"
+  mount_uploader :profile_image, ProfileImageUploader
 
   has_many :favorites
   has_many :favorite_tweets, :through => :favorites, :source => :tweet
@@ -35,9 +36,9 @@ class User < ActiveRecord::Base
   validates :name, :length => {:minimum => 4, :maximum =>40}
   validates :name, :format => { :with => /^[a-zA-Z0-9_]+$/,
     :message => "Only letters and digit and underbar allowed" }
-  
+
   validates :phone, :format => { :with => /^[0-9]{3,}\-[0-9]{3,}\-[0-9]{4,}$/ }
-  
+
   validates :email, :format => { :with => /^[a-zA-Z0-9_]+\@[a-zA-Z0-9_]+\.[a-zA-Z0-9_]+.[a-zA-Z0-9_]*$/ }
 
   validates :password, :presence => true

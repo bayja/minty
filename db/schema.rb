@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130415005227) do
+ActiveRecord::Schema.define(:version => 20130417001636) do
 
   create_table "favorites", :id => false, :force => true do |t|
     t.integer  "user_id"
@@ -40,6 +40,7 @@ ActiveRecord::Schema.define(:version => 20130415005227) do
     t.string   "email"
     t.string   "phone"
     t.string   "password_digest"
+    t.string   "profile_image"
   end
 
   create_table "users_have_followings", :id => false, :force => true do |t|

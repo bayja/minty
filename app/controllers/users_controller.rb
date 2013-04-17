@@ -16,6 +16,10 @@ class UsersController < ApplicationController
   expose(:users)
   expose(:user)
 
+  # def edit
+  #   @user = User.find params[:id]
+  # end
+
   # POST /users
   # POST /users.json
   def create
@@ -37,7 +41,7 @@ class UsersController < ApplicationController
   # PUT /users/1.json
   def update
     @user = User.find(params[:id])
-    
+
     respond_to do |format|
       if @user.update_attributes(params[:user])
         format.html { redirect_to @user, notice: 'User was successfully updated.' }
@@ -69,7 +73,7 @@ class UsersController < ApplicationController
   def follow
     user = User.find(session[:user_id])
     following = User.find(params[:id])
-    
+
     begin
       user.followings << following
       user.save!

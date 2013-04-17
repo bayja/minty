@@ -7,6 +7,9 @@ p
 	- else
 		= button_to 'Follow', following_user_path(user.id)
 p
+	b= "Profile Image:"
+	= image_tag user.profile_image.url
+p
 	b= "Description:"
 	= user.description
 
@@ -28,7 +31,7 @@ p
 
 
 = render :partial => '/tweets/tweet', collection: user.tweets
-	
+
 
 = render 'following', user: user
 

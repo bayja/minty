@@ -61,6 +61,19 @@ describe User do
     end
   end
 
+  context 'profile image' do
+    it 'Profile image 를 저장할 수 있다.' do
+    user = User.new(valid_attrs)
+    test_file = Rails.root.join('spec', 'fixtures', 'sample.gif')
+    file = File.open(test_file)
+
+    user.profile_image = file
+    user.save
+
+    user.profile_image.url.should == "/uploads/user/profile_image/1/sample.gif"
+    end
+  end
+
   context 'favorite_tweets' do
   	let(:user) { User.create! name:'tester', password: "123456", email: "a@a.com", phone: "010-2222-0000" }
   	let(:tweet) { Tweet.create! content: 'test content' }
@@ -78,7 +91,7 @@ describe User do
 
     user.tweets.first.should == tweet2
   end
-  
+
   context "user password" do
     it '유저의 비밀번호는 없으면 안된다.' do
       user = User.new(valid_attrs.merge(password: nil))
