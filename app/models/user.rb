@@ -41,8 +41,8 @@ class User < ActiveRecord::Base
 
   validates :email, :format => { :with => /^[a-zA-Z0-9_]+\@[a-zA-Z0-9_]+\.[a-zA-Z0-9_]+.[a-zA-Z0-9_]*$/ }
 
-  validates :password, :presence => true
-  validates :password, :length => {:minimum => 6, :maximum =>12}
+  validates :password, :presence => true, on: :create
+  validates :password, :length => {:minimum => 6, :maximum =>12}, on: :create
   # validate :check_following_in_my_id
 
   # def check_following_in_my_id
