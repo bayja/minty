@@ -1,9 +1,12 @@
 - if !current_user.nil?
-	ul
-		li = link_to current_user.name, current_user
-		li = "#{current_user.tweets.count} tweet"
+	ul.thumbnails
+		li.span4
+			.thumbnail
+				= image_tag current_user.profile_image.url(:main_profile)
+				h3.text-align-center = link_to current_user.name, current_user
+				p.text-align-center "#{current_user.tweets.count} tweet"
 	= render '/users/following', user: current_user
-- else 
+- else
 	.sidebar-profile
 		.well
 			ul
@@ -11,9 +14,8 @@
 					li
 						= image_tag 'http://mylogo.incruit.com/2009/07/mint_logo_2009727143419.jpg', width: '100%'
 					li
-						strong Welcome to Minty	
-						br 
-							This Service is ........... 
+						strong Welcome to Minty
+						br
+							This Service is ...........
 					li
 						= link_to 'Go Mintech Homepage', 'http://mintech.kr', class: "btn btn-mini btn-info"
-			
