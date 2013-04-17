@@ -28,9 +28,16 @@ p
 
 
 = render :partial => '/tweets/tweet', collection: user.tweets
-	
-
 = render 'following', user: user
+
+img(src=url_for(controller: 'design_image', action: 'show', id: current_user.id))
+
+- if current_user == user
+	= form_tag(:design_image, multipart: true) do
+		b Upload your Design Image :
+		= file_field_tag("design_image")
+		= submit_tag("Upload file")
+
 
 - if current_user == user or current_user.admin?
 	= link_to 'Edit', edit_user_path(user)
