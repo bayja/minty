@@ -23,8 +23,8 @@ Minty::Application.routes.draw do
   get '/popluar_tweets' => "tweets#popluar_tweets"
   get '/hash_tags/:hash_tag' => "hash_tags#with_tag"
 
-  post '/design_image/:id' => "design_image#create"
-  get '/design_image/:id' => "design_image#show"
+  post '/design_image/:id' => "design_image#create", as: "design_image"
+  get '/design_image/:id' => "design_image#show", as: "design_image"
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
