@@ -1,5 +1,8 @@
 Minty::Application.routes.draw do
 
+  resources :stats
+
+
   resources :users do
     post 'following' => :follow, on: :member
     delete 'following' => :unfollow, on: :member
