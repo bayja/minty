@@ -1,0 +1,25 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Ip:</b>
+  <%= @stat.ip %>
+</p>
+
+<p>
+  <b>Os:</b>
+  <%= @stat.os %>
+</p>
+
+<p>
+  <b>Browser:</b>
+  <%= @stat.browser %>
+</p>
+
+<p>
+  <b>From:</b>
+  <%= @stat.from %>
+</p>
+
+
+<%= link_to 'Edit', edit_stat_path(@stat) %> |
+<%= link_to 'Back', stats_path %>
