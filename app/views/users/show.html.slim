@@ -1,5 +1,5 @@
 p
-	= image_tag user.profile_image.url(:thumb)
+	= image_tag user.profile_image.url(:thumb), style: "width: 100px; height: 100px"
 	= " " + user.name
 
 	- if current_user.followings.include? user
