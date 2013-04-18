@@ -11,12 +11,13 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130417002209) do
+ActiveRecord::Schema.define(:version => 20130418000240) do
 
   create_table "design_images", :force => true do |t|
-    t.string "name"
-    t.string "content_type"
-    t.binary "data",         :limit => 1048576
+    t.string  "name"
+    t.string  "content_type"
+    t.binary  "data",         :limit => 1048576
+    t.integer "user_id"
   end
 
   create_table "favorites", :id => false, :force => true do |t|

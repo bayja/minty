@@ -6,6 +6,8 @@ class DesignImageController < ApplicationController
   def create
     @design_image = DesignImage.new
     @design_image.design_image = params[:design_image]
+    @design_image.user = current_user
+
     if @design_image.save
       flash[:notice] = "Design image is uploded"
     else
@@ -15,7 +17,8 @@ class DesignImageController < ApplicationController
   end
 
   def show
-    @design_image = DesignImage.find(params[:id])
+    user = User.find(params[:id])
+    @design_image = user.design_image
     send_data(@design_image.data, filename: @design_image.name, type: @design_image.content_type, disposition: "inline")
   end
 

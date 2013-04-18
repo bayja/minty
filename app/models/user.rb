@@ -8,6 +8,8 @@ class User < ActiveRecord::Base
   has_many :favorites
   has_many :favorite_tweets, :through => :favorites, :source => :tweet
 
+  has_one :design_image
+
   has_and_belongs_to_many :followings,
                           :class_name => 'User',
                           :join_table => 'users_have_followings',

@@ -1,5 +1,9 @@
 class DesignImage < ActiveRecord::Base
 
+	belongs_to :user
+
+  validates :user_id, :presence => true
+
   validates_format_of :content_type,
                       with: /^image/,
                       message: " you can only upload picture"
