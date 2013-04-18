@@ -27,6 +27,15 @@ ActiveRecord::Schema.define(:version => 20130418000240) do
     t.datetime "updated_at", :null => false
   end
 
+  create_table "stats", :force => true do |t|
+    t.string   "ip"
+    t.string   "os"
+    t.string   "browser"
+    t.string   "from"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
   create_table "tweets", :force => true do |t|
     t.text     "content"
     t.datetime "created_at",                   :null => false
@@ -47,6 +56,7 @@ ActiveRecord::Schema.define(:version => 20130418000240) do
     t.string   "email"
     t.string   "phone"
     t.string   "password_digest"
+    t.string   "profile_image"
   end
 
   create_table "users_have_followings", :id => false, :force => true do |t|

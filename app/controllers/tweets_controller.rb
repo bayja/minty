@@ -15,12 +15,18 @@ class TweetsController < ApplicationController
     Tweet.timeline_for(current_user.me_and_followings).paginate(page: params[:page], per_page: 100).order('created_at desc')
   }
   def index
+    Stat.add(request)
+    
     unless params[:tweet_id].nil?
       @quote = Tweet.find(params[:tweet_id])
       @tweet = Tweet.new
       @tweet.content = "\"@#{@quote.user.name}: #{@quote.content}\""
       self.tweet = @tweet
     end
+  end
+
+  def get_user_from
+    request.env["HTTP_REFERER"]
   end
 
   # POST /tweets

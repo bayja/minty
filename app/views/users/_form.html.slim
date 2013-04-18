@@ -1,7 +1,7 @@
 p#notice
   = notice
 
-= form_for(user) do |f|
+= form_for(user, :html => {:multipart => true}) do |f|
   - if user.errors.any?
     #error_explanation
       h2
@@ -13,15 +13,19 @@ p#notice
   .field
     = f.label :name
     br
-    = f.text_field :name 
+    = f.text_field :name
+
+  - if user.new_record?
+    .field
+      = f.label :password, 'Password'
+      = f.password_field :password, size: 10
+
+    .field
+      = f.label :password_confirmation, 'Confirm'
+      = f.password_field :password_confirmation, size: 10
 
   .field
-    = f.label :password, 'Password'
-    = f.password_field :password, size: 10
-
-  .field
-    = f.label :password_confirmation, 'Confirm'
-    = f.password_field :password_confirmation, size: 10
+    = f.file_field :profile_image
 
   .field
     = f.label :description
