@@ -7,6 +7,7 @@
     <th>Browser</th>
     <th>From</th>
     <th>접속시간</th>
+    <th>세션 아이디</th>
   </tr>
 
 <% @stats.each do |stat| %>
@@ -16,6 +17,7 @@
     <td><%= stat.browser %></td>
     <td><%= stat.from %></td>
     <td><%= stat.created_at.localtime %></td>
+    <td><%= stat.session_id %></td>
   </tr>
 <% end %>
 </table>

@@ -1,13 +1,17 @@
 class Stat < ActiveRecord::Base
   attr_accessible :browser, :from, :ip, :os
 
+  validates :session_id, :uniqueness => true
+  validates :session_id, :presence => true
+  
   def self.add(request)
   	user_stat = Stat.new
   	user_stat.ip = get_user_ip(request)
   	user_stat.from = get_user_from(request)
   	user_stat.os = get_user_os(request)
   	user_stat.browser = get_user_browser(request)
-  	
+    user_stat.session_id = request.session_options[:id]
+
   	unless user_stat.ip == "127.0.0.1" or user_stat.ip == "localhost"
   		user_stat.save
   	end
