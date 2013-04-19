@@ -6,18 +6,36 @@ html
     = javascript_include_tag "application"
     = csrf_meta_tags
 
-body background=background_url_for_user(current_user)
-  .container 
-    = render "/layouts/navbar"
-    .row 
-      .span4
-        = render "/layouts/sidebar"
-      .span8
-        = render '/shared/notice', notice: notice
-        = yield
+- if current_user
+  body background=background_url_for_user(current_user)
+    .container 
+      = render "/layouts/navbar"
+      .row 
+        .span4
+          = render "/layouts/sidebar"
+        .span8
+          = render '/shared/notice', notice: notice
+          = yield
 
-  <!- Introduce Modal -->
-  = render "/layouts/introduce_modal"
+    <!- Introduce Modal -->
+    = render "/layouts/introduce_modal"
 
-  <!- Login Modal -->
-  = render "/layouts/login_modal", user: :user
+    <!- Login Modal -->
+    = render "/layouts/login_modal", user: :user
+
+- else
+  body 
+    .container 
+      = render "/layouts/navbar"
+      .row 
+        .span4
+          = render "/layouts/sidebar"
+        .span8
+          = render '/shared/notice', notice: notice
+          = yield
+
+    <!- Introduce Modal -->
+    = render "/layouts/introduce_modal"
+
+    <!- Login Modal -->
+    = render "/layouts/login_modal", user: :user

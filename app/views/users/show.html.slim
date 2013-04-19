@@ -34,7 +34,7 @@ p
 = render 'following', user: user
 
 .background_image
-	img(src=url_for(controller: 'design_image', action: 'show', id: user.id))
+	img(src=background_url_for_user(user))
 
 	- if current_user == user
 		= form_tag(:design_image, multipart: true) do
