@@ -17,12 +17,11 @@ html
           = render '/shared/notice', notice: notice
           = yield
 
-    <!- Introduce Modal -->
-    = render "/layouts/introduce_modal"
+      <!- Introduce Modal -->
+      = render "/layouts/introduce_modal"
 
-    <!- Login Modal -->
-    = render "/layouts/login_modal", user: :user
-
+      <!- Login Modal -->
+      = render "/layouts/login_modal", user: :user
 - else
   body 
     .container 

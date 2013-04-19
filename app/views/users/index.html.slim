@@ -3,9 +3,10 @@ h1
 
 table.table
   tr
-    th= "Name"
+    th = "Name"
     th
   = render users
 
-br
-= link_to 'New User', new_user_path 
+- only_for_admin(current_user) do
+	br
+	= link_to 'New User', new_user_path 
