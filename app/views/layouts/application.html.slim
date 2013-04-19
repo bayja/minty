@@ -6,7 +6,8 @@ html
     = javascript_include_tag "application"
     = csrf_meta_tags
 
-body
+  body*{class:"#{'logout' if !current_user }"}
+    
   .container 
     = render "/layouts/navbar"
     .row 
