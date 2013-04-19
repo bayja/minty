@@ -25,6 +25,16 @@ p#notice
       = f.password_field :password_confirmation, size: 10
 
   .field
+    = f.label :email
+    br
+    = f.email_field :email
+
+  .field
+    = f.label :phone
+    br
+    = f.telephone_field :phone
+      
+  .field
     = f.file_field :profile_image
 
   .field
@@ -41,15 +51,7 @@ p#notice
     br
     = f.text_area :address
 
-  .field
-    = f.label :email
-    br
-    = f.email_field :email
-
-  .field
-    = f.label :phone
-    br
-    = f.telephone_field :phone
+  
 
   .actions
     = f.submit
