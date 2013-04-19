@@ -4,7 +4,7 @@
 		ul.nav
 			li 
 				a href="#introduceModal" role="button" class="" data-toggle="modal" Introduce
-			- if !current_user.nil? and current_user.admin?
+			- if !current_user.nil?
 				li
 					= link_to 'User List', users_path
 			- if current_user
