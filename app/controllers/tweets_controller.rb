@@ -14,9 +14,7 @@ class TweetsController < ApplicationController
   expose(:tweets) {
     Tweet.timeline_for(current_user.me_and_followings).paginate(page: params[:page], per_page: 100).order('created_at desc')
   }
-  def index
-    Stat.add(request)
-    
+  def index    
     unless params[:tweet_id].nil?
       @quote = Tweet.find(params[:tweet_id])
       @tweet = Tweet.new

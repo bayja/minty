@@ -2,15 +2,15 @@
   p.inline
     - if tweet.retweet?
       b= link_to tweet.original_tweet.user.name, tweet.original_tweet.user
-      '  retweet by 
-      b= link_to tweet.user.name, tweet.user 
+      '  retweet by
+      b= link_to tweet.user.name, tweet.user
     - else
-      b= link_to tweet.user.name, tweet.user        
+      b= link_to tweet.user.name, tweet.user
 
-    '     
+    '
     = time_ago_in_words(tweet.created_at)
     '  ago
-  
+
     - unless tweet.user.id ==  current_user.id
       '
       - if current_user.followings.include? tweet.user
