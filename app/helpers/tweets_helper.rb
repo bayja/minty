@@ -12,6 +12,4 @@ module TweetsHelper
 			"#" + tag
 	  end
 	end
-
-
 end

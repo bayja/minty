@@ -63,14 +63,25 @@ describe User do
 
   context 'profile image' do
     it 'Profile image 를 저장할 수 있다.' do
-    user = User.new(valid_attrs)
-    test_file = Rails.root.join('spec', 'fixtures', 'sample.gif')
-    file = File.open(test_file)
+      user = User.new(valid_attrs)
+      test_file = Rails.root.join('spec', 'fixtures', 'sample.gif')
+      file = File.open(test_file)
 
-    user.profile_image = file
-    user.save
+      user.profile_image = file
+      user.save
 
-    user.profile_image.url.should == "/uploads/user/profile_image/1/sample.gif"
+      user.profile_image.url.should == "/uploads/user/profile_image/1/sample.gif"
+    end
+
+    it 'should respond to profile_thumb_image' do
+      user = User.new(valid_attrs)
+      test_file = Rails.root.join('spec', 'fixtures', 'sample.gif')
+      file = File.open(test_file)
+
+      user.profile_image = file
+      user.save
+
+      user.profile_thumb_image.should == "/uploads/user/profile_image/1/thumb_sample.gif"
     end
   end
 

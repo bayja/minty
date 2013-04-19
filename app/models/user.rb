@@ -1,4 +1,8 @@
 class User < ActiveRecord::Base
+  def profile_thumb_image
+    profile_image.url(:thumb)
+  end
+
   attr_accessible :name, :description, :admin, :address, :email, :phone, :password, :password_confirmation, :profile_image
 
   has_secure_password
